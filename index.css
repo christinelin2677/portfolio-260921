@@ -87,14 +87,13 @@ html[data-theme='light'] .particle-canvas {
 
 .project-cover-image {
   filter: grayscale(1) brightness(0.5);
-  transition: filter 180ms ease-out;
+  transition: filter 320ms cubic-bezier(0.22, 1, 0.36, 1);
 }
 
-/* Highlight immediately on the outer, stationary click target. Only fade on exit. */
+/* Start immediately, then ease into a softer highlight on the stationary target. */
 .project-trigger:hover .project-cover-image,
 .project-trigger:focus-visible .project-cover-image {
-  filter: grayscale(0) brightness(1.1);
-  transition: none;
+  filter: grayscale(0) brightness(0.9);
 }
 
 .site-header::before {
@@ -155,4 +154,8 @@ html[data-theme='light'] .particle-canvas {
 @media (prefers-reduced-motion: reduce) {
   .theme-toggle { transition: none; }
   ::view-transition-old(root), ::view-transition-new(root) { animation: none; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .project-cover-image { transition: none; }
 }

@@ -28,6 +28,7 @@ export interface Project {
   impactGallery?: string[];
   hmwDescription?: string;
   accentColor?: string;
+  placeholder?: boolean;
 
 
 

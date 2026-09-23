@@ -3,6 +3,7 @@ import React, { useEffect } from 'react';
 import { motion, useScroll, useTransform } from 'framer-motion';
 import { Project } from '../types';
 import SectionReveal from './SectionReveal';
+import ThemeToggle from './ThemeToggle';
 
 interface ProjectPageProps {
   project: Project;
@@ -24,24 +25,27 @@ const ProjectPage: React.FC<ProjectPageProps> = ({ project, onBack, onNext }) =>
       initial={{ opacity: 0 }}
       animate={{ opacity: 1 }}
       exit={{ opacity: 0 }}
-      className="bg-white text-white min-h-screen selection:bg-blue-500"
+      className="bg-canvas text-ink min-h-screen selection:bg-blue-500"
     >
       {/* Navigation */}
-      <nav className="fixed top-0 left-0 w-full z-50 p-8 flex justify-between items-center mix-blend-difference">
+      <nav data-theme="dark" className="fixed top-0 left-0 w-full z-50 p-8 flex justify-between items-center text-ink mix-blend-difference">
         <button 
           onClick={onBack}
-          className="group flex items-center gap-4 text-xs font-black uppercase tracking-[0.4em] hover:text-zinc-400 transition-colors"
+          className="group flex items-center gap-4 text-xs font-black uppercase tracking-[0.4em] hover:text-neutral-400 transition-colors"
         >
-          <span className="w-8 h-[1px] bg-white group-hover:w-12 transition-all" />
+          <span className="w-8 h-[1px] bg-ink group-hover:w-12 transition-all" />
           Back to Work
         </button>
+        <div className="flex items-center gap-4">
         <span className="text-[10px] font-mono opacity-50">
-          PROJECT NO. {project.id.padStart(2, '0')}
+          {project.placeholder ? 'DREAMLAKE' : `PROJECT NO. ${project.id.padStart(2, '0')}`}
         </span>
+        <ThemeToggle />
+        </div>
       </nav>
 
       {/* Hero Section */}
-      <header className="relative h-screen w-full flex items-center justify-center overflow-hidden">
+      <header data-theme="dark" className="relative h-screen w-full flex items-center justify-center overflow-hidden text-ink bg-canvas">
         <motion.div 
           style={{ opacity: heroOpacity, scale: heroScale }}
           className="absolute inset-0 z-0"
@@ -71,21 +75,21 @@ const ProjectPage: React.FC<ProjectPageProps> = ({ project, onBack, onNext }) =>
             {project.title}
           </motion.h1>
           
-          <div className="mt-20 grid grid-cols-2 md:grid-cols-4 gap-8 max-w-4xl mx-auto text-left border-t border-white/10 pt-10">
+          <div className="mt-20 grid grid-cols-2 md:grid-cols-4 gap-8 max-w-4xl mx-auto text-left border-t border-ink/10 pt-10">
             <div>
-              <p className="text-[8px] uppercase tracking-[0.4em] text-zinc-450 mb-2 opacity-50">Client</p>
+              <p className="text-[8px] uppercase tracking-[0.4em] text-neutral-450 mb-2 opacity-50">Client</p>
               <p className="text-sm font-medium">{project.client}</p>
             </div>
             <div>
-              <p className="text-[8px] uppercase tracking-[0.4em] text-zinc-450 mb-2 opacity-50">Year</p>
+              <p className="text-[8px] uppercase tracking-[0.4em] text-neutral-450 mb-2 opacity-50">Year</p>
               <p className="text-sm font-medium">{project.year}</p>
             </div>
             <div>
-              <p className="text-[8px] uppercase tracking-[0.4em] text-zinc-450 mb-2 opacity-50">Role</p>
+              <p className="text-[8px] uppercase tracking-[0.4em] text-neutral-450 mb-2 opacity-50">Role</p>
               <p className="text-sm font-medium">{project.role}</p>
             </div>
             <div>
-              <p className="text-[8px] uppercase tracking-[0.4em] text-zinc-450 mb-2 opacity-50">Services</p>
+              <p className="text-[8px] uppercase tracking-[0.4em] text-neutral-450 mb-2 opacity-50">Services</p>
               <p className="text-sm font-medium">{project.tags.join(', ')}</p>
             </div>
           </div>
@@ -94,16 +98,31 @@ const ProjectPage: React.FC<ProjectPageProps> = ({ project, onBack, onNext }) =>
         <motion.div 
           animate={{ y: [0, 10, 0] }}
           transition={{ duration: 2, repeat: Infinity }}
-          className="absolute bottom-10 left-1/2 -translate-x-1/2 w-px h-12 bg-gradient-to-b from-white to-transparent"
+          className="absolute bottom-10 left-1/2 -translate-x-1/2 w-px h-12 bg-gradient-to-b from-ink to-transparent"
         />
       </header>
 
       {/* Content Sections */}
       <main className="container mx-auto px-6 py-40">
+        {project.placeholder ? (
+          <div className="mx-auto max-w-4xl">
+            <p className="mb-8 text-[10px] uppercase tracking-[0.4em] text-neutral-500">Case study in progress</p>
+            <h2 className="mb-8 font-serif text-4xl italic md:text-6xl">A dream taking shape.</h2>
+            <p className="mb-20 max-w-xl text-neutral-400">The DreamLake story is coming soon. Research, process, and final designs will be shared here.</p>
+            {['Overview', 'Research & exploration', 'Design process', 'Final experience'].map((title, index) => (
+              <section key={title} className="mb-16">
+                <h3 className="mb-6 text-xs uppercase tracking-[0.2em] text-neutral-400">0{index + 1} / {title}</h3>
+                <div className="flex aspect-[16/7] items-center justify-center rounded-xl border border-neutral-800 bg-neutral-900/40">
+                  <span className="text-xs uppercase tracking-[0.3em] text-neutral-500">Coming soon</span>
+                </div>
+              </section>
+            ))}
+          </div>
+        ) : <>
         <SectionReveal>
           <div className="max-w-4xl mx-auto mb-60">
             <h2   className={`${project.accentColor ?? 'text-blue-400'} text-[10px] font-black uppercase tracking-[1em] mb-12`}>The Overview</h2>
-            <p className="text-2xl md:text-5xl font-serif leading-tight text-zinc-300 italic hover:text-zinc-700 
+            <p className="text-2xl md:text-5xl font-serif leading-tight text-neutral-300 italic hover:text-neutral-700
   opacity-100 transition-all duration-1000 ease-out ease-[cubic-bezier(0.16,1,0.3,1)]">
               {project.longDescription}
             </p>
@@ -151,7 +170,7 @@ const ProjectPage: React.FC<ProjectPageProps> = ({ project, onBack, onNext }) =>
           <h2 className={`${project.accentColor ?? 'text-blue-400'} text-[10px] font-black uppercase tracking-[1em] mb-12`}>How Might We…</h2>
           <SectionReveal>
           <div className="max-w-4xl mx-auto mb-60">
-            <p className="text-2xl md:text-5xl font-serif leading-tight text-zinc-300 italic hover:text-zinc-700 
+            <p className="text-2xl md:text-5xl font-serif leading-tight text-neutral-300 italic hover:text-neutral-700
   opacity-100 transition-all duration-1000 ease-out ease-[cubic-bezier(0.16,1,0.3,1)]">
               {project.hmwDescription}
             </p>
@@ -385,7 +404,7 @@ const ProjectPage: React.FC<ProjectPageProps> = ({ project, onBack, onNext }) =>
       <h3 className="text-blue-400 text-[10px] font-black uppercase tracking-[0.6em] mb-6">
         The Challenge
       </h3>
-      <p className="text-2xl md:text-3xl font-serif italic leading-tight text-zinc-300 hover:text-zinc-700 
+      <p className="text-2xl md:text-3xl font-serif italic leading-tight text-neutral-300 hover:text-neutral-700
   opacity-100 transition-all duration-1000 ease-out ease-[cubic-bezier(0.16,1,0.3,1)]">
         {project.challenge}
       </p>
@@ -397,7 +416,7 @@ const ProjectPage: React.FC<ProjectPageProps> = ({ project, onBack, onNext }) =>
       <h3 className="text-emerald-400 text-[10px] font-black uppercase tracking-[0.6em] mb-6">
         The Vision
       </h3>
-      <p className="text-2xl md:text-3xl font-serif italic leading-tight text-zinc-300 hover:text-zinc-700 
+      <p className="text-2xl md:text-3xl font-serif italic leading-tight text-neutral-300 hover:text-neutral-700
   opacity-100 transition-all duration-1000 ease-out ease-[cubic-bezier(0.16,1,0.3,1)]">
         {project.approach}
       </p>
@@ -405,16 +424,17 @@ const ProjectPage: React.FC<ProjectPageProps> = ({ project, onBack, onNext }) =>
   </SectionReveal>
 </div>
 
+        </>}
       </main>
 
       {/* Next Project Footer */}
-      <footer className="py-60 bg-black text-center border-t border-white/5 cursor-pointer group" onClick={onNext}>
+      <footer className="py-60 bg-canvas text-center border-t border-ink/5 cursor-pointer group" onClick={onNext}>
         <SectionReveal>
-          <span className="text-zinc-600 text-[10px] font-black uppercase tracking-[1em] mb-12 block">Next Artifact</span>
+          <span className="text-neutral-600 text-[10px] font-black uppercase tracking-[1em] mb-12 block">Next Artifact</span>
           <h2 className="text-6xl md:text-[10vw] font-serif italic leading-none group-hover:tracking-wider transition-all duration-1000">
-            Discover <br/> <span className="not-italic text-zinc-500 group-hover:text-white transition-colors">More</span>
+            Discover <br/> <span className="not-italic text-neutral-500 group-hover:text-ink transition-colors">More</span>
           </h2>
-          <div className="mt-20 overflow-hidden h-20 w-px bg-white/20 mx-auto">
+          <div className="mt-20 overflow-hidden h-20 w-px bg-ink/20 mx-auto">
              <motion.div 
                animate={{ y: ["-100%", "100%"] }}
                transition={{ duration: 2, repeat: Infinity, ease: "linear" }}

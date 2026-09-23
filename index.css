@@ -1,0 +1,158 @@
+:root, [data-theme='dark'] {
+  color-scheme: dark;
+  --canvas: 0 0 0;
+  --ink: 255 255 255;
+  --neutral-100: 244 244 245;
+  --neutral-200: 228 228 231;
+  --neutral-300: 212 212 216;
+  --neutral-400: 161 161 170;
+  --neutral-500: 113 113 122;
+  --neutral-600: 82 82 91;
+  --neutral-700: 63 63 70;
+  --neutral-800: 39 39 42;
+  --neutral-900: 24 24 27;
+}
+
+:root[data-theme='light'] {
+  color-scheme: light;
+  --canvas: 250 249 246;
+  --ink: 30 30 32;
+  --neutral-100: 39 39 42;
+  --neutral-200: 50 50 54;
+  --neutral-300: 63 63 70;
+  --neutral-400: 82 82 91;
+  --neutral-500: 99 99 108;
+  --neutral-600: 111 111 120;
+  --neutral-700: 122 122 130;
+  --neutral-800: 213 211 208;
+  --neutral-900: 235 233 230;
+}
+
+html[data-theme='light'] .project-cover {
+  box-shadow: 0 24px 70px -30px rgb(30 30 32 / 0.18);
+}
+
+html[data-theme='light'] .particle-canvas {
+  filter: invert(1);
+}
+
+.theme-toggle {
+  color: rgb(var(--neutral-400));
+  background: transparent;
+  border: 0;
+  transition: color 180ms;
+}
+
+.theme-toggle:hover { color: rgb(var(--ink)); }
+
+.hero-hover-text { transition: color 450ms cubic-bezier(0.22, 1, 0.36, 1); }
+.hero-hover-text:hover {
+  color: rgb(var(--ink));
+  transition-duration: 280ms;
+}
+
+.contact-tooltip {
+  position: absolute;
+  top: calc(100% + 10px);
+  left: 50%;
+  transform: translate(-50%, -4px);
+  white-space: nowrap;
+  color: rgb(var(--ink));
+  font-size: 12px;
+  letter-spacing: 0.04em;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 150ms ease-out, transform 150ms ease-out;
+}
+
+.contact-icon:hover .contact-tooltip,
+.contact-icon:focus-visible .contact-tooltip {
+  opacity: 1;
+  transform: translate(-50%, 0);
+}
+
+.portrait-image {
+  filter: grayscale(1);
+  opacity: 0.6;
+  transition: filter 180ms ease-out, opacity 180ms ease-out, transform 300ms ease-out;
+}
+
+.portrait-hover:hover .portrait-image {
+  filter: grayscale(0);
+  opacity: 1;
+  transform: scale(1.05);
+  /* Color and brightness respond immediately; only the subtle zoom is animated. */
+  transition: transform 300ms ease-out;
+}
+
+.project-cover-image {
+  filter: grayscale(1) brightness(0.5);
+  transition: filter 180ms ease-out;
+}
+
+/* Highlight immediately on the outer, stationary click target. Only fade on exit. */
+.project-trigger:hover .project-cover-image,
+.project-trigger:focus-visible .project-cover-image {
+  filter: grayscale(0) brightness(1.1);
+  transition: none;
+}
+
+.site-header::before {
+  content: '';
+  position: absolute;
+  inset: 0 0 -24px;
+  z-index: -1;
+  pointer-events: none;
+  background: linear-gradient(to bottom, rgb(var(--canvas) / 0.94) 0%, rgb(var(--canvas) / 0.8) 50%, rgb(var(--canvas) / 0.4) 80%, rgb(var(--canvas) / 0) 100%);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  mask-image: linear-gradient(to bottom, black 60%, transparent 100%);
+  -webkit-mask-image: linear-gradient(to bottom, black 60%, transparent 100%);
+}
+.theme-toggle:focus-visible { outline: 2px solid rgb(var(--ink)); outline-offset: 4px; }
+
+@property --theme-wave-radius {
+  syntax: '<length>';
+  inherits: true;
+  initial-value: -180px;
+}
+
+::view-transition-group(root) { animation: none; }
+::view-transition-image-pair(root) { isolation: isolate; }
+::view-transition-old(root) {
+  animation: none;
+  mix-blend-mode: normal;
+  z-index: 1;
+}
+
+::view-transition-new(root) {
+  z-index: 2;
+  mix-blend-mode: normal;
+  /* A soft wavefront with a faint trailing ripple, anchored bottom-left. */
+  --theme-wave-mask: radial-gradient(circle at 0% 100%,
+    #000 max(0px, calc(var(--theme-wave-radius) - 130px)),
+    rgb(0 0 0 / 0.94) max(0px, calc(var(--theme-wave-radius) - 90px)),
+    #000 max(0px, calc(var(--theme-wave-radius) - 60px)),
+    rgb(0 0 0 / 0.72) max(0px, calc(var(--theme-wave-radius) - 15px)),
+    rgb(0 0 0 / 0.3) max(0px, calc(var(--theme-wave-radius) + 45px)),
+    transparent max(0px, calc(var(--theme-wave-radius) + 125px)));
+  mask-image: var(--theme-wave-mask);
+  -webkit-mask-image: var(--theme-wave-mask);
+  animation: theme-water-reveal 1100ms cubic-bezier(0.4, 0, 0.2, 1) both;
+}
+
+@keyframes theme-water-reveal {
+  from { --theme-wave-radius: -180px; }
+  to { --theme-wave-radius: var(--theme-wave-end, 200vmax); }
+}
+
+::view-transition { pointer-events: none; }
+
+.theme-fading :where(body, nav, main, section, footer, h1, h2, h3, p, span, a, button, .glass) {
+  transition: background-color 400ms ease-in-out, color 400ms ease-in-out, border-color 400ms ease-in-out !important;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .theme-toggle { transition: none; }
+  ::view-transition-old(root), ::view-transition-new(root) { animation: none; }
+}

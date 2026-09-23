@@ -3,6 +3,18 @@ import { Project } from './types';
 
 export const PROJECTS: Project[] = [
   {
+    id: 'dreamlake',
+    title: 'DreamLake',
+    category: 'Product Design',
+    description: 'Case study coming soon.',
+    image: '/assets/dreamlake-placeholder.svg',
+    tags: ['Coming soon'],
+    year: '2026',
+    role: 'Coming soon',
+    client: 'DreamLake',
+    placeholder: true,
+  },
+  {
     id: '1',
     title: ' AI HUB',
     category: 'AI Ed Platform',

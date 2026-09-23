@@ -1,0 +1,17 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1600" height="1100" viewBox="0 0 1600 1100">
+  <defs>
+    <linearGradient id="sky" x2="0" y2="1"><stop stop-color="#101c2e"/><stop offset="1" stop-color="#4c687b"/></linearGradient>
+    <radialGradient id="glow"><stop stop-color="#c6dbe5" stop-opacity=".28"/><stop offset="1" stop-color="#c6dbe5" stop-opacity="0"/></radialGradient>
+    <linearGradient id="water" x2="0" y2="1"><stop stop-color="#56778b"/><stop offset="1" stop-color="#0b1828"/></linearGradient>
+  </defs>
+  <path fill="url(#sky)" d="M0 0h1600v1100H0z"/>
+  <ellipse cx="800" cy="480" rx="620" ry="450" fill="url(#glow)"/>
+  <circle cx="800" cy="330" r="74" fill="#d7e2e6" opacity=".8"/>
+  <path d="M0 660Q260 410 570 645Q1000 400 1600 630V1100H0Z" fill="#182f40"/>
+  <path d="M0 695Q500 650 1600 705V1100H0Z" fill="url(#water)"/>
+  <g fill="none" stroke="#bdd6e0" opacity=".2">
+    <ellipse cx="800" cy="790" rx="180" ry="14"/><ellipse cx="800" cy="825" rx="260" ry="23"/><ellipse cx="800" cy="880" rx="360" ry="35"/>
+  </g>
+  <text x="800" y="570" text-anchor="middle" fill="#f0f4f6" font-family="Georgia,serif" font-size="108" font-style="italic">DreamLake</text>
+  <text x="800" y="625" text-anchor="middle" fill="#d0dce2" font-family="Arial,sans-serif" font-size="17" letter-spacing="7">CASE STUDY COMING SOON</text>
+</svg>

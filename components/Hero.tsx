@@ -19,14 +19,14 @@ const Hero: React.FC = () => {
   const smoothScale = useSpring(textScale, { stiffness: 60, damping: 25 });
 
   return (
-    <section ref={containerRef} className="h-[200vh] relative overflow-visible bg-black">
+    <section ref={containerRef} className="h-[200vh] relative overflow-visible bg-canvas">
       <div className="sticky top-0 h-screen w-full flex flex-col justify-center items-center overflow-hidden">
         <ParticlesBackground />
         
         {/* Atmosphere layer */}
         <motion.div 
           style={{ opacity: overlayOpacity }}
-          className="absolute inset-0 bg-black z-[5] pointer-events-none"
+          className="absolute inset-0 bg-canvas z-[5] pointer-events-none"
         />
 
         <motion.div
@@ -42,11 +42,16 @@ const Hero: React.FC = () => {
             animate={{ opacity: 1, scale: 1 }}
             transition={{ duration: 2, ease: [0.16, 1, 0.3, 1] }}
           >
-            <span className="inline-block text-zinc-500 text-[10px] tracking-[0.5em] uppercase mb-8 font-black">
-              Christine · AI Product Designer · New York
+            <span className="inline-block max-w-full text-neutral-500 text-xs md:text-sm leading-relaxed tracking-[0.2em] md:tracking-[0.35em] uppercase mb-8 font-black">
+              {['Christine', 'Design Engineer', 'AI Product Designer'].map((label, index) => (
+                <React.Fragment key={label}>
+                  {index > 0 && <span> · </span>}
+                  <span className="hero-hover-text pointer-events-auto inline-block">{label}</span>
+                </React.Fragment>
+              ))}
             </span>
             
-            <h1 className="text-7xl md:text-[14vw] font-serif leading-[0.75] tracking-tighter text-white perspective-container">
+            <h1 className="text-7xl md:text-[14vw] font-serif leading-[0.75] tracking-tighter text-ink perspective-container">
               <span className="block overflow-hidden">
                 <span className="block">SHAPE</span>
               </span>
@@ -59,9 +64,14 @@ const Hero: React.FC = () => {
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ delay: 1.2, duration: 1.5 }}
-              className="mt-6 text-zinc-500 text-[11px] md:text-sm tracking-[0.1em] font-medium"
+              className="mx-auto w-fit max-w-full mt-6 text-neutral-500 text-sm md:text-lg leading-relaxed tracking-[0.06em] md:tracking-[0.1em] font-medium"
             >
-              Designing trustworthy, strategy-driven AI experiences.
+              {'Designing trustworthy, strategy-driven AI experiences.'.split(' ').map((word, index) => (
+                <React.Fragment key={word}>
+                  {index > 0 && ' '}
+                  <span className="hero-hover-text pointer-events-auto inline-block">{word}</span>
+                </React.Fragment>
+              ))}
             </motion.p>
           </motion.div>
         </motion.div>
@@ -73,8 +83,8 @@ const Hero: React.FC = () => {
           style={{ opacity: useTransform(scrollYProgress, [0, 0.05], [1, 0]) }}
           className="absolute bottom-12 flex flex-col items-center z-10"
         >
-          <div className="w-px h-24 bg-gradient-to-b from-white to-transparent mx-auto mb-10 animate-pulse" />
-          <p className="text-zinc-500 text-[10px] tracking-[0.5em] uppercase font-bold">
+          <div className="w-px h-24 bg-gradient-to-b from-ink to-transparent mx-auto mb-10 animate-pulse" />
+          <p className="text-neutral-500 text-[10px] tracking-[0.5em] uppercase font-bold">
             Dive Into the Archive
           </p>
         </motion.div>

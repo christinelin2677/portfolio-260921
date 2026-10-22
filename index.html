@@ -6,10 +6,10 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Christine | Creative Digital Studio</title>
     <script>
-      // Restore before the first paint so a saved light theme does not flash dark.
+      // Default to light before first paint; retain an explicit dark preference.
       try {
-        document.documentElement.dataset.theme = localStorage.getItem('portfolio-theme') === 'light' ? 'light' : 'dark';
-      } catch { document.documentElement.dataset.theme = 'dark'; }
+        document.documentElement.dataset.theme = localStorage.getItem('portfolio-theme') === 'dark' ? 'dark' : 'light';
+      } catch { document.documentElement.dataset.theme = 'light'; }
     </script>
     <script src="https://cdn.tailwindcss.com"></script>
     <script>

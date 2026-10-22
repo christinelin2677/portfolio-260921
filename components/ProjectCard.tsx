@@ -81,18 +81,20 @@ const ProjectCard: React.FC<ProjectCardProps> = ({ project, index }) => {
           />
         </motion.div>
 
+        <div className="project-cover-shade" aria-hidden="true" />
+
         {/* Text UI with massive Z-depth */}
         <motion.div 
           style={{ transform: 'translateZ(180px)', transformStyle: 'preserve-3d' }}
-          className="absolute inset-0 flex flex-col justify-end p-12 pointer-events-none opacity-0 group-hover:opacity-100 transition-all duration-150 ease-[0.16, 1, 0.3, 1]"
+          className="project-cover-label absolute inset-0 flex flex-col justify-end p-12 pointer-events-none opacity-0 group-hover:opacity-100 transition-opacity duration-[90ms] ease-out"
         >
           <div className="overflow-hidden">
-            <motion.p className="text-ink text-[10px] font-black tracking-[0.8em] uppercase mb-4 translate-y-10 group-hover:translate-y-0 transition-transform duration-150">
+            <motion.p className="text-ink text-[10px] font-black tracking-[0.8em] uppercase mb-4 translate-y-2 group-hover:translate-y-0 transition-transform duration-[110ms] ease-out">
               Artifact {index + 1}
             </motion.p>
           </div>
           <div className="overflow-hidden">
-            <motion.h4 className="text-ink text-5xl md:text-6xl font-serif italic mb-6 translate-y-10 group-hover:translate-y-0 transition-transform duration-150 tracking-tighter">
+            <motion.h4 className="text-ink text-5xl md:text-6xl font-serif italic mb-6 translate-y-2 group-hover:translate-y-0 transition-transform duration-[110ms] ease-out tracking-tighter">
               {project.title}
             </motion.h4>
           </div>

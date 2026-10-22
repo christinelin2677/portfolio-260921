@@ -93,7 +93,7 @@ html[data-theme='light'] .particle-canvas {
 /* Start immediately, then ease into a softer highlight on the stationary target. */
 .project-trigger:hover .project-cover-image,
 .project-trigger:focus-visible .project-cover-image {
-  filter: grayscale(0) brightness(0.9);
+  filter: grayscale(0) brightness(0.72);
 }
 
 .site-header::before {
@@ -158,4 +158,21 @@ html[data-theme='light'] .particle-canvas {
 
 @media (prefers-reduced-motion: reduce) {
   .project-cover-image { transition: none; }
+}
+
+/* Keep white project labels legible over bright cover artwork. */
+.project-cover-shade {
+  transform: translateZ(41px);
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  background: linear-gradient(to top, rgba(0,0,0,.82), rgba(0,0,0,.48) 28%, transparent 65%);
+  opacity: 0;
+  transition: opacity 320ms cubic-bezier(.22,1,.36,1);
+}
+.project-trigger:hover .project-cover-shade,
+.project-trigger:focus-visible .project-cover-shade { opacity: 1; }
+.project-cover-label { text-shadow: 0 2px 12px rgba(0,0,0,.4); }
+@media (prefers-reduced-motion: reduce) {
+  .project-cover-shade { transition: none; }
 }
